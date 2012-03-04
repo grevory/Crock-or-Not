@@ -34,7 +34,9 @@ class Ideas extends CI_Model {
     }
     
     /**
-     *Checks to makes sure this idea is good to use
+     * Checks to makes sure this idea is good to use
+     * @ids string Comma delimited string of idea ids to skip - ones that have been viewed before
+     * @id int The id being compared to see if it is good
      */
     function is_good_idea ($ids,$id)
     {

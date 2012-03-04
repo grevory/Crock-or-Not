@@ -22,6 +22,9 @@
         </ul>
     <?php endif; ?>
     <hr>
-    <?php echo get_cookie('Test');?>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script>
+    $.post('/vote/',{id:1,crock:1},function(data){ console.log('AJAX Data',data); });
+    </script>
 </body>
 </html>

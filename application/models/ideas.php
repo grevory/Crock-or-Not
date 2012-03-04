@@ -24,6 +24,7 @@ class Ideas extends CI_Model {
             $id = $this->is_good_idea($exclude,$random_row);
         } while (!$id);
         
+        // I'm sure this can be handled with more grace
         if (!$id)
             die('No id');
         
@@ -34,7 +35,7 @@ class Ideas extends CI_Model {
     }
     
     /**
-     * Checks to makes sure this idea is good to use
+     * Checks to makes sure this idea has not been viewed before
      * @ids string Comma delimited string of idea ids to skip - ones that have been viewed before
      * @id int The id being compared to see if it is good
      */
@@ -51,6 +52,9 @@ class Ideas extends CI_Model {
         return $id;
     }
     
+    /** Get a full tally of the number of crock votes and not votes given an idea id
+     * @id int The id of the idea you want the results for
+     */
     function get_vote_results($id)
     {
         $tally = array('crock'=>0,'not'=>0);
@@ -62,10 +66,8 @@ class Ideas extends CI_Model {
         if ($results->num_rows() > 0)
             foreach ($results->result() as $result)
             {
-                if ($result->crock == 1)
-                    $tally['crock']++;
-                else
-                    $tally['not']++;
+                // Increment the tally for this vote
+                $tally[$this->_get_vote_type]++;
             }
             
         return $tally;
@@ -83,17 +85,26 @@ class Ideas extends CI_Model {
             
             foreach ($all_proof->result() as $proof)
             {
-                $key = 'not';
-                if ($proof->crock == 1)
-                    $key = 'crock';
+                $vote = $this->_get_vote_type($proof->crock);
                 
-                array_push($collection[$key],$proof->url);    
+                array_push($collection[$vote],$proof->url);    
             }
             
             return $collection;
         }
         
         return false;
+    }
+    
+    /**
+     * Determines whether a vote was a crock or not
+     * @vote int 1 represents a crock and 0 represents a not
+     */
+    function _get_vote_type ($vote)
+    {
+        if ($vote == 1)
+            return 'crock';
+        return 'not';
     }
 
     function insert_entry()

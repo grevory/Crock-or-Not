@@ -64,9 +64,9 @@ $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
 // Include the database settings if they exist
-if (file_exists('database.settings.php'))
+if (file_exists(APPPATH.'config/database.settings.php'))
 {
-    include('database.settings.php');
+    include_once(APPPATH.'config/database.settings.php');
 }
 
 /* End of file database.php */

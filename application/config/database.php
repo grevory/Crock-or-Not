@@ -47,10 +47,10 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'main.activelink.ca';
-$db['default']['username'] = 'crockornot';
-$db['default']['password'] = '95b{.]eY';
-$db['default']['database'] = 'crockornot';
+$db['default']['hostname'] = '';
+$db['default']['username'] = '';
+$db['default']['password'] = '';
+$db['default']['database'] = '';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
@@ -63,6 +63,11 @@ $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
 
+// Include the database settings if they exist
+if (file_exists('database.settings.php'))
+{
+    include('database.settings.php');
+}
 
 /* End of file database.php */
 /* Location: ./application/config/database.php */
